@@ -1,7 +1,11 @@
 const express = require("express");
-const { createCategorie } = require("../controllers/categories");
+const { createCategorie , deleteCategorie } = require("../controllers/categories");
+
 const router = express.Router();
 
-router.post("/categories", createCategorie);
+router.post("/", createCategorie);
+
+router.delete("/:id", deleteCategorie);
+
 
 module.exports = router;

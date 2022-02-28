@@ -13,4 +13,21 @@ const createCategorie = async (req, res) => {
   }
 };
 
-module.exports = { createCategorie };
+const deleteCategorie = async (req, res) => {
+  const  {id}  = req.params;
+  console.log(id);
+  try {
+    
+    
+    await db.Categories.destroy({
+      where: {
+        id: id,
+      },
+    });
+    res.json("categorie was deleted succefully ");
+  } catch (error) {
+    res.json('id no encontrado');
+  }
+};
+
+module.exports = { createCategorie, deleteCategorie };
