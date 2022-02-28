@@ -14,20 +14,36 @@ const createCategorie = async (req, res) => {
 };
 
 const deleteCategorie = async (req, res) => {
-  const  {id}  = req.params;
-  console.log(id);
   try {
-    
-    
-    await db.Categories.destroy({
-      where: {
-        id: id,
-      },
-    });
-    res.json("categorie was deleted succefully ");
-  } catch (error) {
-    res.json('id no encontrado');
-  }
+    const { id } = req.params;
+
+    const categorie = await db.Categories.findByPk(id);
+
+    if (!categorie) {
+
+        res.status(404).json('The comment does not exist');
+
+    } else {
+
+        await db.Categories.destroy( {
+            where: { id: id }
+        })
+
+        const response = {
+            status: 201,
+            msg: 'deleted commentary',
+        }
+        res.status(201).json({ response })
+    }
+
+
+} catch (err) {
+    const response = {
+        status : 500,
+        msg :'internal server error'
+    }
+    res.status(500).json({ response })
+}
 };
 
 module.exports = { createCategorie, deleteCategorie };
